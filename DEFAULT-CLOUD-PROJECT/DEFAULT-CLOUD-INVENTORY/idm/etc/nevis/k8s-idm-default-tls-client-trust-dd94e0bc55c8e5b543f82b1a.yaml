@@ -1,0 +1,9 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisTrustStore"
+metadata:
+  name: "idm-default-tls-client-trust"
+  namespace: "component"
+  labels:
+    deploymentTarget: "idm"
+spec:
+  keystores: []

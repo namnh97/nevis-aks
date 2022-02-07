@@ -1,0 +1,15 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisKeyStore"
+metadata:
+  name: "idm-default-identity"
+  namespace: "component"
+  labels:
+    deploymentTarget: "idm"
+spec:
+  cn: "idm"
+  usage: "<reserved for future use>"
+  san:
+    dns:
+    - "idm"
+    - "idm.component"
+    email: []

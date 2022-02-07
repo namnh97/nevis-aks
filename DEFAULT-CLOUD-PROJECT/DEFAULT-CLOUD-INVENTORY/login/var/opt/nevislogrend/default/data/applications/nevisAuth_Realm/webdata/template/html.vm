@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="${utils.escapeHtml($login.localeCode)}">
+
+	<head>
+		<title>$text.get('title')</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="${login.appDataPath}/resources/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="${login.appDataPath}/resources/bootstrap-theme.min.css" rel="stylesheet" type="text/css" media="all">
+        <link href="${login.appDataPath}/resources/default.css" rel="stylesheet" type="text/css" media="all">
+
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+        #parse("${templatePath}/js_start.vm")
+	</head>
+
+	<body>
+	    #parse("${templatePath}/lang.vm")
+
+        #parse("${templatePath}/header.vm")
+
+		<main id="content" class="container">
+            #parse("${templatePath}/form.vm")
+		</main>
+
+        #parse("${templatePath}/footer.vm")
+
+        #parse("${templatePath}/js_end.vm")
+	</body>
+</html>

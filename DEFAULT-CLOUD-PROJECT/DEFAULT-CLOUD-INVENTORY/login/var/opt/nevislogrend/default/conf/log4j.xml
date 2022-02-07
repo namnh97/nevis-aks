@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[nevislogrend.log] %d{ISO8601} %-5.5p [%t] [%40.40c:%-4.5L] %X{indent}%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.StringMatchFilter">
+            <param name="StringToMatch" value="GET /nevislogrend/health"/>
+            <param name="AcceptOnMatch" value="false"/>
+        </filter>
+    </appender>
+    <category name="jcan.Op">
+        <priority value="INFO"/>
+    </category>
+    <root>
+        <priority value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</log4j:configuration>

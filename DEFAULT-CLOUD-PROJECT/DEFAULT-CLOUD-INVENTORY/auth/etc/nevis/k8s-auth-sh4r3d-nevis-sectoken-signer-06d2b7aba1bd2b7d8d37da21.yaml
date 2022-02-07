@@ -1,0 +1,13 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisKeyStore"
+metadata:
+  name: "auth-sh4r3d-nevis-sectoken-signer"
+  namespace: "component"
+  labels:
+    deploymentTarget: "auth"
+spec:
+  cn: "NEVIS_SecToken"
+  usage: "<reserved for future use>"
+  san:
+    dns: []
+    email: []

@@ -1,0 +1,14 @@
+server:
+  name: "default"
+  protocol: "https"
+  port: "8991"
+  host: "0.0.0.0"
+  tls:
+    keystore: "/var/opt/keys/own/auth-default-identity/keystore.p12"
+    keystore-passphrase: "${exec:/var/opt/keys/own/auth-default-identity/keypass}"
+    truststore: "/var/opt/keys/trust/auth-default-tls-client-trust/truststore.p12"
+    truststore-passphrase: "${exec:/var/opt/keys/trust/auth-default-tls-client-trust/keypass}"
+    client-auth: "disabled"
+management:
+  healthchecks:
+    enabled: "true"

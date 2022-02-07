@@ -1,0 +1,13 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisTrustStore"
+metadata:
+  name: "idm-default-signer-trust"
+  namespace: "component"
+  labels:
+    deploymentTarget: "idm"
+spec:
+  keystores:
+  - name: "auth-sh4r3d-default-default-signer"
+    namespace: "component"
+  - name: "auth-sh4r3d-nevis-sectoken-signer"
+    namespace: "component"

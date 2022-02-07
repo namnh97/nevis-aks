@@ -1,0 +1,279 @@
+
+#macro(renderFormField $guiElem, $gui, $tabindex)
+
+#if ($guiElem.type == "submit" || $guiElem.type == "button"  ||  $guiElem.type == "reset" ||  $guiElem.type == "link")
+## do nothing, will be rendered in renderFormControls  nd renderFormLinks
+
+
+#elseif ($guiElem.type == "info" || $guiElem.type == "error")
+	#if ($guiElem.label && $guiElem.label.length() > 0)
+		## special fields: display some text only
+		#set ($class = "form-group")
+		#if ($guiElem.type == "error")
+			#set ($class = "$class has-error")
+		#end
+		<div class="$class">
+			<div class="col-sm-offset-3 col-sm-6">
+				<span class="help-block small" id="$guiElem.name">
+					$guiElem.label
+				</span>
+			</div>
+		</div>
+	#end
+
+#elseif ($guiElem.type == "hidden" && $guiElem.name == "saml.logoutURLs")
+<script>
+var sp_urls = '$guiElem.value'.split(',');
+var final_url = '$gui.getGuiElem("saml.logoutURL").value';
+function kill_session() {
+    var current_url = window.location.href;
+    if (current_url.indexOf('?logout') == -1 && current_url.indexOf('&logout') == -1) {
+      console.log("current URL does not terminate the IDP session");
+      var logout_url = '';
+      if (current_url.indexOf('?') > 0) {
+        logout_url = current_url + "&logout";
+      }
+      else {
+        logout_url = current_url + "?logout";
+      }
+      $.ajax({
+        type: "GET",
+        url: logout_url,
+        async: false,
+        xhrFields: {
+          withCredentials: true
+        },
+        dataType: "text",
+        success: function() {},
+        error: function() {}
+      });
+    }
+}
+var request_urls = sp_urls.filter(function(current_url) {
+    return current_url.indexOf('SAMLRequest') > 0;
+});
+var response_urls = sp_urls.filter(function(current_url) {
+    return current_url.indexOf('SAMLResponse') > 0;
+});
+function end_logout() {
+  if (response_urls.length == 0) {
+    console.log('IDP-initiated SAML logout detected');
+    kill_session(); // required to terminate IDP session
+    window.location.href = final_url;
+  }
+  else {
+    console.log('SP-initiated SAML logout detected');
+    kill_session(); // required to terminate IDP session
+    window.location.href = response_urls[0]; // only 1 such URL allowed. process ends on SP
+  }
+}
+var requests = [];
+for (var i = 0; i < request_urls.length; i++) {
+    var current_url = request_urls[i];
+    requests.push($.ajax({
+      type: "GET",
+      url: current_url,
+      xhrFields: {
+         withCredentials: true
+      },
+      crossDomain: true,
+      dataType: 'jsonp',
+      error: function() {}
+      })
+    );
+}
+// send out the requests in parallel and afterwards terminate the logout process
+// we have to terminate the logout no mather if the requests were successful or if there were failed requests
+$.when.apply($, requests).then(function() { end_logout(); }, function() { end_logout(); });
+</script>
+
+#elseif ($guiElem.type == "hidden")
+    <input type="hidden" name="$guiElem.name" value="$utils.escapeHtml($guiElem.value)">
+
+
+#else ## not info, error, button, submit, reset or hidden -> normal visual element
+
+## define CSS class of representation in form
+#set ($class = "form-group")
+#if ($guiElem.optional)
+#set ($class = "$class optional")
+#else
+#set ($class = "$class required")
+#end
+
+## highlight failed input validation, if flagged
+
+#if ($guiElem.validationFailed && $guiElem.value && $guiElem.value.length() > 0)
+#set ($class = "$class has-error")
+#end
+
+#if ($guiElem.validationFailed && (!$guiElem.value || $guiElem.value.length() == 0))
+#set ($class = "$class has-error")
+#end
+
+
+## the form field's container, a label, and optionally a validation-related message
+
+<div class="$class">
+	## Special handling required for radios + checkboxes
+	#if ($guiElem.type != "radio" && $guiElem.type != "checkbox")
+	  <label class="col-sm-3 control-label" for="$guiElem.name">
+	    $guiElem.label
+		</label>
+
+		<div class="col-sm-6">
+			#if ($guiElem.type == "text")
+		        <input class="form-control" type="text" name="$guiElem.name" id="$guiElem.name"
+		                maxlength="$guiElem.length"
+		                value="$utils.escapeHtml($guiElem.value)" tabindex="$tabindex">
+
+			#elseif ($guiElem.type == "pw-text")
+		        <input type="password" class="form-control" name="$guiElem.name" id="$guiElem.name"
+		                maxlength="$guiElem.length"
+		                value="$utils.escapeHtml($guiElem.value)" tabindex="$tabindex" autocomplete="off" />
+
+			#elseif ($guiElem.type == "select")
+				#set ($scrollSize = $guiElem.getGuiElems().size())
+				#set ($scrollSize = $math.min($scrollSize,4))
+				#if ($guiElem.multiple)
+		        <select name="$guiElem.name" class="form-control" size="$scrollSize" multiple>
+				#else
+		        <select name="$guiElem.name" class="form-control">
+				#end
+				#foreach ($option in $guiElem.getGuiElems())
+					#if ($option.selected)
+		                <option value="$utils.escapeHtml($option.value)" selected>$option.label</option>
+					#else
+		                <option value="$utils.escapeHtml($option.value)">$option.label</option>
+					#end
+				#end ## foreach option
+		    </select>
+
+			#elseif ($guiElem.type == "image" )
+		    <img src="$utils.escapeHtml($guiElem.value)" alt="$guiElem.label" />
+			#end
+
+			#if ($guiElem.validationMessage && $guiElem.validationMessage.length() > 0)
+				<span class="help-block small">$guiElem.validationMessage</span>
+			#end
+
+			#if ($jsValidation)
+				#renderElementValidation($guiElem, $gui)
+			#end
+		</div>
+	#else
+	## Special handling for checkboxes and radios
+		<div class="col-sm-offset-3 col-sm-6">
+			<label>
+				<input type="$guiElem.type" name="$guiElem.name"
+								value="$utils.escapeHtml($guiElem.value)"
+								#if ($guiElem.checked || $guiElem.value == 'true')
+								checked
+								#end
+								tabindex="$tabindex">
+				$guiElem.label
+			</label>
+
+			#if ($guiElem.validationMessage && $guiElem.validationMessage.length() > 0)
+				<span class="help-block small">$guiElem.validationMessage</span>
+			#end
+
+			#if ($jsValidation)
+				#renderElementValidation($guiElem, $gui)
+			#end
+		</div>
+	#end
+</div>
+#end
+
+#end ## end macro
+
+
+
+
+#macro(renderElementValidation $guiElem, $gui)
+#if (($guiElem.validation && $guiElem.validation.length() > 0)||($guiElem.format && $guiElem.format.length() > 0))
+
+
+<script type="text/javascript">
+
+#if ($guiElem.validation && $guiElem.validation.length() > 0)
+#if ($guiElem.validation.indexof('return ') > 0)
+#set ($validationFunc="function () { $guiElem.validation }")
+#else
+#set ($validationFunc="function () { return $guiElem.validation ; }")
+#end
+#else
+#set ($validationFunc="function () { return true; }")
+#end
+
+	var form = document.getElementById('${gui.name}');
+	var formInput = form.elements["${guiElem.name}"];
+	formInput.onchange = function () {
+		var valid = ${validationFunc}.call(this);
+#if ($guiElem.format && $guiElem.format.length() > 0)
+		valid = valid && (/${guiElem.format}/).test(this.value);
+#end
+		var parent = this.parentNode;
+		if (!valid) {
+			parent.className += " has-error";
+		} else {
+			parent.className = parent.className.replace(/ has-error/g, '');
+		}
+
+#if (!$guiElem.optional)
+		if (!this.value) {
+			parent.className += " has-warning";
+		} else {
+			parent.className = parent.className.replace(/ has-warning/g,'');
+		}
+#end
+	};
+</script>
+
+#end
+#end ## macro
+
+
+#macro(renderFormLinks $gui)
+#set ($noLinks = true)
+#foreach ($guiElem in $gui.getGuiElems())
+   #if ($guiElem.type == "link")
+      #if ($noLinks)
+   			<div class="form-group text-center">
+           #set ($noLinks = false)
+      #end
+      <a class="link" title="${utils.escapeHtml($guiElem.label)}" href="$utils.escapeHtml($guiElem.value)">${utils.escapeHtml($guiElem.label)}</a>
+   #end
+#end
+	#if (!$noLinks)
+	  </div>
+	#end
+#end
+
+#macro(renderFormControls $gui)
+<div class="form-group text-center">
+#set ($buttonClass = "btn")
+#if ($isFormRequest)
+	#set ($buttonClass = "$buttonClass btn-default")
+#else
+	#set ($buttonClass = "$buttonClass btn-primary")
+#end
+#foreach ($guiElem in $gui.getGuiElems())
+	#if ($guiElem.type == "submit" || $guiElem.type == "button" || $guiElem.type == "reset")
+    <button name="$guiElem.name" value="$utils.escapeHtml($guiElem.value)" class="$buttonClass $guiElem.cssClass">
+            #if ($guiElem.icon != "")
+                #if ($guiElem.icon.contains("http"))
+                    <img src="$guiElem.icon" class="$guiElem.iconCssClass" />
+                #else
+                    <img src="${login.appDataPath}/resources/$guiElem.icon" class="$guiElem.iconCssClass" />
+                #end
+            #end
+			$utils.escapeHtml($guiElem.label)
+		</button>
+	#end
+
+#end ## foreach
+</div>
+
+#end ## end macro

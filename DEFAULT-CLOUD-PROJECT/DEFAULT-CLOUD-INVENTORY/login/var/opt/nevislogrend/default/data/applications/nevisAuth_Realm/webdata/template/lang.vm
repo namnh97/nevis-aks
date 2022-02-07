@@ -1,0 +1,32 @@
+## Nav =================================================================
+<nav id="language-switch" class="container-fluid">
+	<div class="dropdown pull-right">
+		<a id="language-switch-btn" class="dropdown-toggle text-uppercase small" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<strong id="language">$login.localeCode</strong>
+			<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" aria-labelledby="language-switch-btn">
+			## loop over all defined languages/locales....
+			#foreach ($locale in $login.locales)
+				## find translated label of current locale
+				#if ($text.contains("language.$locale"))
+					#set ($langLabel = $text.get("language.$locale"))
+				#elseif ($locale.length() > 2)
+					#set ($langLabel = $text.get("language.${locale.substring(0,2).toLowercase()}"))
+				#else
+					#set ($langLabel = $locale)
+				#end
+				## emit link or text for each language
+				#if ($login.localeCode != $locale && $login.language != $locale)
+					#set ($langTarget = $utils.escapeHtmlAttribute($gui.target('language', $locale)))
+					<li>
+						<a class="lang" href="$langTarget">
+							<strong class="prefix text-primary text-uppercase">$locale</strong>
+							<span>$langLabel</span>
+						</a>
+					</li>
+				#end
+			#end ## end foreach
+		</ul>
+	</div>
+</nav>

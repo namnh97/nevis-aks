@@ -1,0 +1,50 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisComponent"
+metadata:
+  name: "auth"
+  namespace: "component"
+  labels:
+    deploymentTarget: "auth"
+  annotations:
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "06d2b7aba1bd2b7d8d37da21"
+spec:
+  type: "NevisAuth"
+  replicas: 1
+  version: "4.33"
+  gitInitVersion: "1.0"
+  runAsNonRoot: true
+  ports:
+    soap: 8991
+  resources:
+    limits:
+      cpu: "1000m"
+      memory: "1000Mi"
+    requests:
+      cpu: "20m"
+      memory: "200Mi"
+  livenessProbe:
+    soap:
+      tcpSocket: true
+      initialDelaySeconds: 15
+      periodSeconds: 20
+      timeoutSeconds: 4
+  readinessProbe:
+    soap:
+      tcpSocket: true
+      initialDelaySeconds: 15
+      periodSeconds: 20
+      timeoutSeconds: 4
+  podDisruptionBudget:
+    maxUnavailable: "50%"
+  git: null
+  database:
+    name: "auth"
+    requiredVersion: "4.33"
+  keystores:
+  - "auth-sh4r3d-default-default-signer"
+  - "auth-sh4r3d-nevis-sectoken-signer"
+  - "auth-default-identity"
+  truststores:
+  - "auth-default-tls-trust"
+  - "auth-default-tls-client-trust"

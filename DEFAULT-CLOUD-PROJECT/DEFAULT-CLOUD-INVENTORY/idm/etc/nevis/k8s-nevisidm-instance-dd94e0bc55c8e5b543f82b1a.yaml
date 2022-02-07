@@ -1,0 +1,51 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisComponent"
+metadata:
+  name: "idm"
+  namespace: "component"
+  labels:
+    deploymentTarget: "idm"
+  annotations:
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "dd94e0bc55c8e5b543f82b1a"
+spec:
+  type: "NevisIDM"
+  replicas: 1
+  version: "2.83"
+  gitInitVersion: "1.0"
+  runAsNonRoot: true
+  ports:
+    httpmanagement: 8998
+    soap: 8989
+  resources:
+    limits:
+      cpu: "1000m"
+      memory: "2200Mi"
+    requests:
+      cpu: "10m"
+      memory: "500Mi"
+  livenessProbe:
+    httpmanagement:
+      httpGet:
+        path: "/liveness"
+      initialDelaySeconds: 15
+      periodSeconds: 20
+      timeoutSeconds: 4
+  readinessProbe:
+    httpmanagement:
+      httpGet:
+        path: "/health"
+      initialDelaySeconds: 15
+      periodSeconds: 20
+      timeoutSeconds: 4
+  podDisruptionBudget:
+    maxUnavailable: "50%"
+  git: null
+  database:
+    name: "idm"
+    requiredVersion: "7.5"
+  keystores:
+  - "idm-default-identity"
+  truststores:
+  - "idm-default-tls-client-trust"
+  - "idm-default-signer-trust"

@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "/opt/nevisproxy/dtd/web-app_2_3.dtd">
+<web-app>
+    <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+    <context-param>
+        <param-name>application-id</param-name>
+        <param-value>nevisk8s.southeastasia.cloudapp.azure.com</param-value>
+    </context-param>
+    <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+    <context-param>
+        <param-name>SectokenVerifierCert</param-name>
+        <param-value>/var/opt/keys/trust/proxy-nevisauth-realm-signer-trust/truststore.pem</param-value>
+    </context-param>
+    <!-- source: pattern://4e74853adf0195890ede7acf -->
+    <filter>
+        <filter-name>AuthenticationService_nevisAuth_Realm</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::auth::IdentityCreationFilter</filter-class>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>AuthenticationServlet</param-name>
+            <param-value>Connector_nevisAuth_Realm</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>BodyReadSize</param-name>
+            <param-value>32768</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>EntryPointID</param-name>
+            <param-value>nevisk8s.southeastasia.cloudapp.azure.com</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>InactiveInterval</param-name>
+            <param-value>7200</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>InterceptionRedirect</param-name>
+            <param-value>never</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>LoginRendererServlet</param-name>
+            <param-value>LoginRenderer_nevisLogrend_Instance</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>Realm</param-name>
+            <param-value>nevisAuth_Realm</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>RecheckAuthentication</param-name>
+            <param-value>On</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>RenewIdentification</param-name>
+            <param-value>both</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>StateKey</param-name>
+            <param-value>nevisAuth_Realm</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <init-param>
+            <param-name>StoreInterceptedRequest</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://00d6ee63cd07feac46cc9b93, pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter>
+        <filter-name>Authentication_nevisAuth_Realm</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::auth::IdentityCreationFilter</filter-class>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>AuthenticationServlet</param-name>
+            <param-value>Connector_nevisAuth_Realm</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>EntryPointID</param-name>
+            <param-value>nevisk8s.southeastasia.cloudapp.azure.com</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>InactiveInterval</param-name>
+            <param-value>7200</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>LoginRendererServlet</param-name>
+            <param-value>LoginRenderer_nevisLogrend_Instance</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Realm</param-name>
+            <param-value>nevisAuth_Realm</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>RenewIdentification</param-name>
+            <param-value>both</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>StateKey</param-name>
+            <param-value>nevisAuth_Realm</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>StoreInterceptedRequest</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08, pattern://ccfe8d3aec80d5e5f6abbf08#nevisIDM -->
+    <filter>
+        <filter-name>CSRFRewrite_IDM_WebApp</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::rewrite::RewriteFilter</filter-class>
+        <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08 -->
+        <init-param>
+            <param-name>ResponseBody</param-name>
+            <param-value>PCRE/(if\s?\(isValidDomain\(document.domain,).*$/:$1(function(h) { var i = h.indexOf("\:"); return h.substring(0, i != -1 ? i \: h.length) })("ENV\:HTTP_Host;"))) {:PT</param-value>
+        </init-param>
+        <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08 -->
+        <init-param>
+            <param-name>ResponseBody.Mode</param-name>
+            <param-value>replacement</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://a565771c44e432389f691496 -->
+    <filter>
+        <filter-name>CSRF_Default</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::lua::LuaFilter</filter-class>
+        <!-- source: pattern://a565771c44e432389f691496 -->
+        <init-param>
+            <param-name>Script.InputHeaderFunctionName</param-name>
+            <param-value>inputHeader</param-value>
+        </init-param>
+        <!-- source: pattern://a565771c44e432389f691496 -->
+        <init-param>
+            <param-name>Script.Path</param-name>
+            <param-value>/var/opt/nevisproxy/default/host-nevisk8s.southeastasia.cloudapp.azure.com/WEB-INF/csrf_default.lua</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <filter>
+        <filter-name>ErrorHandler_Default</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::error::ErrorFilter</filter-class>
+        <!-- source: pattern://a746982f1d932756f134d771 -->
+        <init-param>
+            <param-name>PlaceHolders</param-name>
+            <param-value>
+                TRANSFER_ID:TRANSFER_ID
+                TIMESTAMP:TIMESTAMP
+            </param-value>
+        </init-param>
+        <!-- source: pattern://a746982f1d932756f134d771 -->
+        <init-param>
+            <param-name>StatusCode</param-name>
+            <param-value>
+                403:Hosting_Default:/errorpages/403.html:reset-header:keep-status-code
+                404:Hosting_Default:/errorpages/404.html:keep-header:keep-status-code
+                500:Hosting_Default:/errorpages/500.html:reset-header:keep-status-code
+                502:Hosting_Default:/errorpages/502.html:keep-header:keep-status-code
+            </param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <filter>
+        <filter-name>LivenessLuaFilter</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::lua::LuaFilter</filter-class>
+        <!-- source: pattern://a746982f1d932756f134d771 -->
+        <init-param>
+            <param-name>Script.InputHeaderFunctionName</param-name>
+            <param-value>inputHeader</param-value>
+        </init-param>
+        <!-- source: pattern://a746982f1d932756f134d771 -->
+        <init-param>
+            <param-name>Script.Path</param-name>
+            <param-value>/var/opt/nevisproxy/default/host-nevisk8s.southeastasia.cloudapp.azure.com/WEB-INF/liveness.lua</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08 -->
+    <filter>
+        <filter-name>ModSecurity_IDM_WebApp</filter-name>
+        <filter-class>ch::nevis::nevisproxy::filter::modsecurity::ModsecurityFilter</filter-class>
+        <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08 -->
+        <init-param>
+            <param-name>ConfigFile</param-name>
+            <param-value>/var/opt/nevisproxy/default/host-nevisk8s.southeastasia.cloudapp.azure.com/WEB-INF/security_idm_webapp.conf</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://00d6ee63cd07feac46cc9b93, pattern://a565771c44e432389f691496 -->
+    <filter>
+        <filter-name>ModSecurity_Web_Application</filter-name>
+        <filter-class>ch::nevis::nevisproxy::filter::modsecurity::ModsecurityFilter</filter-class>
+        <!-- source: pattern://a565771c44e432389f691496 -->
+        <init-param>
+            <param-name>ConfigFile</param-name>
+            <param-value>/var/opt/nevisproxy/default/host-nevisk8s.southeastasia.cloudapp.azure.com/WEB-INF/security_web_application.conf</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <filter>
+        <filter-name>Qos</filter-name>
+        <filter-class>ch:nevis:navajo:apglue:httpd_2_4_x:servlet:ApacheConfigFilter</filter-class>
+        <filter-lib>libApache2_4_Servlet.so.1</filter-lib>
+        <!-- source: pattern://a746982f1d932756f134d771 -->
+        <init-param>
+            <param-name>ServerConfig</param-name>
+            <param-value>
+                QS_SrvMaxConnClose 85%
+                QS_SrvMaxConnPerIP 75 500
+                QS_SrvMinDataRate 120 1500 500
+            </param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <filter>
+        <filter-name>ReadinessLuaFilter</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::lua::LuaFilter</filter-class>
+        <!-- source: pattern://a746982f1d932756f134d771 -->
+        <init-param>
+            <param-name>Script.InputHeaderFunctionName</param-name>
+            <param-value>inputHeader</param-value>
+        </init-param>
+        <!-- source: pattern://a746982f1d932756f134d771 -->
+        <init-param>
+            <param-name>Script.Path</param-name>
+            <param-value>/var/opt/nevisproxy/default/host-nevisk8s.southeastasia.cloudapp.azure.com/WEB-INF/readiness.lua</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter>
+        <filter-name>Requirement_NEVIS_SecToken_nevisAuth_Realm</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::auth::SecurityRoleFilter</filter-class>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>AuthenticationServlet</param-name>
+            <param-value>Connector_nevisAuth_Realm</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>DynamicRoleAcquire</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>DynamicRoleAcquire.CheckRoleRemoval</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>InterceptionRedirect</param-name>
+            <param-value>never</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>LoginRendererServlet</param-name>
+            <param-value>LoginRenderer_nevisLogrend_Instance</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>RolesRequired</param-name>
+            <param-value>token.NEVIS_SecToken</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>StateKey</param-name>
+            <param-value>nevisAuth_Realm</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <filter>
+        <filter-name>ResponseHeader_Default</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::delegation::HeaderDelegationFilter</filter-class>
+        <!-- source: pattern://a746982f1d932756f134d771 -->
+        <init-param>
+            <param-name>DelegateToFrontend</param-name>
+            <param-value>
+                Strict-Transport-Security: max-age=63072000
+                X-Content-Type-Options: nosniff
+                Referrer-Policy: strict-origin-when-cross-origin
+            </param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://00d6ee63cd07feac46cc9b93, pattern://4e74853adf0195890ede7acf, pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f, pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter>
+        <filter-name>SessionHandler_nevisAuth_Realm</filter-name>
+        <filter-class>ch::nevis::nevisproxy::filter::session::SessionManagementFilter</filter-class>
+        <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Cookie.Name</param-name>
+            <param-value>Session_nevisAuth_Realm</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Cookie.Secure</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Identification</param-name>
+            <param-value>COOKIE</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>MaxInactiveInterval</param-name>
+            <param-value>600</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>MaxLifetime</param-name>
+            <param-value>43200</param-value>
+        </init-param>
+        <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Servlet</param-name>
+            <param-value>SessionStore_Managed_nevisProxy_Remote_Session_Store</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>UpdateTimeStampMinInterval</param-name>
+            <param-value>120</param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter>
+        <filter-name>Token_NEVIS_SecToken</filter-name>
+        <filter-class>ch::nevis::isiweb4::filter::delegation::DelegationFilter</filter-class>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>DelegateBasicAuth</param-name>
+            <param-value>
+                AUTH:user.auth.UserId
+                AUTH:token.NEVIS_SecToken
+            </param-value>
+        </init-param>
+    </filter>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <filter-mapping>
+        <filter-name>ErrorHandler_Default</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <filter-mapping>
+        <filter-name>ResponseHeader_Default</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter-mapping>
+        <filter-name>SessionHandler_nevisAuth_Realm</filter-name>
+        <url-pattern>/nevisidm/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://4e74853adf0195890ede7acf -->
+    <filter-mapping>
+        <filter-name>SessionHandler_nevisAuth_Realm</filter-name>
+        <url-pattern>/pwreset/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://00d6ee63cd07feac46cc9b93, pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter-mapping>
+        <filter-name>SessionHandler_nevisAuth_Realm</filter-name>
+        <url-pattern>/*</url-pattern>
+        <exclude-url-regex>^/errorpages.*$|^/favicon.ico$|^/index.html$|^/nevisidm/.*$|^/nevislogrend/.*$|^/pwreset/.*$|^/resources.*$</exclude-url-regex>
+    </filter-mapping>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <filter-mapping>
+        <filter-name>LivenessLuaFilter</filter-name>
+        <url-pattern>/liveness</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <filter-mapping>
+        <filter-name>ReadinessLuaFilter</filter-name>
+        <url-pattern>/readiness</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08 -->
+    <filter-mapping>
+        <filter-name>ModSecurity_IDM_WebApp</filter-name>
+        <url-pattern>/nevisidm/admin/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://00d6ee63cd07feac46cc9b93, pattern://a565771c44e432389f691496 -->
+    <filter-mapping>
+        <filter-name>ModSecurity_Web_Application</filter-name>
+        <url-pattern>/*</url-pattern>
+        <exclude-url-regex>^/nevisidm/admin/.*$</exclude-url-regex>
+    </filter-mapping>
+    <!-- source: pattern://a565771c44e432389f691496 -->
+    <filter-mapping>
+        <filter-name>CSRF_Default</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter-mapping>
+        <filter-name>Authentication_nevisAuth_Realm</filter-name>
+        <url-pattern>/nevisidm/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://00d6ee63cd07feac46cc9b93, pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter-mapping>
+        <filter-name>Authentication_nevisAuth_Realm</filter-name>
+        <url-pattern>/*</url-pattern>
+        <exclude-url-regex>^/errorpages.*$|^/favicon.ico$|^/index.html$|^/nevisidm/.*$|^/nevislogrend/.*$|^/pwreset/.*$|^/resources.*$</exclude-url-regex>
+    </filter-mapping>
+    <!-- source: pattern://4e74853adf0195890ede7acf -->
+    <filter-mapping>
+        <filter-name>AuthenticationService_nevisAuth_Realm</filter-name>
+        <url-pattern>/pwreset/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter-mapping>
+        <filter-name>Requirement_NEVIS_SecToken_nevisAuth_Realm</filter-name>
+        <url-pattern>/nevisidm/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+    <filter-mapping>
+        <filter-name>Token_NEVIS_SecToken</filter-name>
+        <url-pattern>/nevisidm/*</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08, pattern://ccfe8d3aec80d5e5f6abbf08#nevisIDM -->
+    <filter-mapping>
+        <filter-name>CSRFRewrite_IDM_WebApp</filter-name>
+        <url-pattern>/nevisidm/JavaScriptServlet</url-pattern>
+    </filter-mapping>
+    <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+    <listener>
+        <listener-class>ch::nevis::isiweb4::listener::SessionListener</listener-class>
+    </listener>
+    <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08, pattern://ccfe8d3aec80d5e5f6abbf08#allowedMethods, pattern://ccfe8d3aec80d5e5f6abbf08#nevisIDM -->
+    <servlet>
+        <servlet-name>Connector_IDM_WebApp</servlet-name>
+        <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08 -->
+        <servlet-class>ch::nevis::isiweb4::servlet::connector::http::HttpsConnectorServlet</servlet-class>
+        <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08#allowedMethods -->
+        <init-param>
+            <param-name>AllowedMethods</param-name>
+            <param-value>GET,POST,HEAD,OPTIONS</param-value>
+        </init-param>
+        <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08 -->
+        <init-param>
+            <param-name>AutoRewrite</param-name>
+            <param-value>header</param-value>
+        </init-param>
+        <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08 -->
+        <init-param>
+            <param-name>CookieManager</param-name>
+            <param-value>retain:^.*$</param-value>
+        </init-param>
+        <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08#nevisIDM -->
+        <init-param>
+            <param-name>InetAddress</param-name>
+            <param-value>idm-web:8989</param-value>
+        </init-param>
+        <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08#nevisIDM -->
+        <init-param>
+            <param-name>UseSSL</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+    <!-- source: pattern://a565771c44e432389f691496, pattern://a565771c44e432389f691496#allowedMethods, pattern://a565771c44e432389f691496#backends, pattern://a565771c44e432389f691496#responseRewrite -->
+    <servlet>
+        <servlet-name>Connector_Web_Application</servlet-name>
+        <!-- source: pattern://a565771c44e432389f691496 -->
+        <servlet-class>ch::nevis::isiweb4::servlet::connector::http::HttpsConnectorServlet</servlet-class>
+        <!-- source: pattern://a565771c44e432389f691496#allowedMethods -->
+        <init-param>
+            <param-name>AllowedMethods</param-name>
+            <param-value>ALL-HTTP,ALL-WEBDAV,-TRACE,-CONNECT</param-value>
+        </init-param>
+        <!-- source: pattern://a565771c44e432389f691496#responseRewrite -->
+        <init-param>
+            <param-name>AutoRewrite</param-name>
+            <param-value>header</param-value>
+        </init-param>
+        <!-- source: pattern://a565771c44e432389f691496 -->
+        <init-param>
+            <param-name>CookieManager</param-name>
+            <param-value>retain:^.*$</param-value>
+        </init-param>
+        <!-- source: pattern://a565771c44e432389f691496 -->
+        <init-param>
+            <param-name>DNSCache.ttl</param-name>
+            <param-value>60</param-value>
+        </init-param>
+        <!-- source: pattern://a565771c44e432389f691496#backends -->
+        <init-param>
+            <param-name>InetAddress</param-name>
+            <param-value>www.google.com:443</param-value>
+        </init-param>
+        <!-- source: pattern://a565771c44e432389f691496#backends -->
+        <init-param>
+            <param-name>UseSSL</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+    <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+    <servlet>
+        <servlet-name>Connector_nevisAuth_Realm</servlet-name>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <servlet-class>ch::nevis::isiweb4::servlet::connector::soap::esauth4::Esauth4ConnectorServlet</servlet-class>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Transport.DNSCache.ttl</param-name>
+            <param-value>60</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Transport.InetAddress</param-name>
+            <param-value>auth:8991</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Transport.KeepAlive.LifeTime</param-name>
+            <param-value>30</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Transport.RequestTimeout</param-name>
+            <param-value>90000</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Transport.ResourceManager.RetryTimeout</param-name>
+            <param-value>2</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Transport.SSLCACertificateFile</param-name>
+            <param-value>/var/opt/keys/trust/proxy-nevisauth-realm-tls-trust/truststore.pem</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Transport.SSLCheckPeerHostname</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Transport.SSLClientCertificateFile</param-name>
+            <param-value>/var/opt/keys/own/proxy-nevisauth-realm-identity/cert.pem</param-value>
+        </init-param>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <init-param>
+            <param-name>Transport.SSLClientKeyFile</param-name>
+            <param-value>/var/opt/keys/own/proxy-nevisauth-realm-identity/key.pem</param-value>
+        </init-param>
+    </servlet>
+    <!-- source: pattern://4e74853adf0195890ede7acf -->
+    <servlet>
+        <servlet-name>Hosting_Default</servlet-name>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <servlet-class>ch::nevis::isiweb4::servlet::defaults::DefaultServlet</servlet-class>
+    </servlet>
+    <!-- source: pattern://89c988d526ac8228116c746e -->
+    <servlet>
+        <servlet-name>LoginRenderer_nevisLogrend_Instance</servlet-name>
+        <!-- source: pattern://89c988d526ac8228116c746e -->
+        <servlet-class>ch::nevis::isiweb4::servlet::rendering::LoginRendererServlet</servlet-class>
+        <!-- source: pattern://89c988d526ac8228116c746e -->
+        <init-param>
+            <param-name>PropagateRemoteHeaders</param-name>
+            <param-value>Set-Cookie</param-value>
+        </init-param>
+        <!-- source: pattern://89c988d526ac8228116c746e -->
+        <init-param>
+            <param-name>RenderingProvider</param-name>
+            <param-value>remote:NevisLogrendConnector_nevisLogrend_Instance:/nevislogrend/index.vm?logrendresourcepath=/nevislogrend</param-value>
+        </init-param>
+    </servlet>
+    <!-- source: pattern://89c988d526ac8228116c746e -->
+    <servlet>
+        <servlet-name>NevisLogrendConnector_nevisLogrend_Instance</servlet-name>
+        <!-- source: pattern://89c988d526ac8228116c746e -->
+        <servlet-class>ch::nevis::isiweb4::servlet::connector::http::HttpConnectorServlet</servlet-class>
+        <!-- source: pattern://89c988d526ac8228116c746e -->
+        <init-param>
+            <param-name>InetAddress</param-name>
+            <param-value>login:8988</param-value>
+        </init-param>
+        <!-- source: pattern://89c988d526ac8228116c746e -->
+        <init-param>
+            <param-name>MappingType</param-name>
+            <param-value>pathinfo</param-value>
+        </init-param>
+        <!-- source: pattern://89c988d526ac8228116c746e -->
+        <init-param>
+            <param-name>ResourceManager.RetryTimeout</param-name>
+            <param-value>2</param-value>
+        </init-param>
+        <!-- source: pattern://89c988d526ac8228116c746e -->
+        <init-param>
+            <param-name>URIPrefix</param-name>
+            <param-value>/nevislogrend</param-value>
+        </init-param>
+    </servlet>
+    <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+    <servlet>
+        <servlet-name>SessionStore_Managed_nevisProxy_Remote_Session_Store</servlet-name>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <servlet-class>ch::nevis::nevisproxy::servlet::cache::mysql::MySQLSessionStoreServlet</servlet-class>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <init-param>
+            <param-name>AttributesTableName</param-name>
+            <param-value>attribute</param-value>
+        </init-param>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <init-param>
+            <param-name>ConfigurationsTableName</param-name>
+            <param-value>conf</param-value>
+        </init-param>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <init-param>
+            <param-name>ConnectString</param-name>
+            <param-value>//nevisk8smariadb.mariadb.database.azure.com:3306/replicated_session_store?connect_timeout=10&amp;ping_timeout=2</param-value>
+        </init-param>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <init-param>
+            <param-name>DisableDatabaseSchemaCheck</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <init-param>
+            <param-name>KeyToIdMapTableName</param-name>
+            <param-value>key_id_map</param-value>
+        </init-param>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <init-param>
+            <param-name>MaxLimitOnDelete</param-name>
+            <param-value>100</param-value>
+        </init-param>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <init-param>
+            <param-name>Password</param-name>
+            <param-value>${exec:/var/opt/nevisproxy/default/conf/credentials/dbPassword}</param-value>
+        </init-param>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <init-param>
+            <param-name>SessionsTableName</param-name>
+            <param-value>session</param-value>
+        </init-param>
+        <!-- source: pattern://eeb1dd4c259cbb6f13ef3522 -->
+        <init-param>
+            <param-name>UserName</param-name>
+            <param-value>${exec:/var/opt/nevisproxy/default/conf/credentials/dbUser}</param-value>
+        </init-param>
+    </servlet>
+    <!-- source: pattern://ccfe8d3aec80d5e5f6abbf08, pattern://ccfe8d3aec80d5e5f6abbf08#nevisIDM -->
+    <servlet-mapping>
+        <servlet-name>Connector_IDM_WebApp</servlet-name>
+        <url-pattern>/nevisidm/*</url-pattern>
+        <exclude-url-regex>/nevisidm/services/.*|/nevisidm/api/.*|/nevisidm/selfadmin/.*</exclude-url-regex>
+    </servlet-mapping>
+    <!-- source: pattern://89c988d526ac8228116c746e -->
+    <servlet-mapping>
+        <servlet-name>NevisLogrendConnector_nevisLogrend_Instance</servlet-name>
+        <url-pattern>/nevislogrend/*</url-pattern>
+    </servlet-mapping>
+    <!-- source: pattern://4e74853adf0195890ede7acf -->
+    <servlet-mapping>
+        <servlet-name>Hosting_Default</servlet-name>
+        <url-pattern>/pwreset/*</url-pattern>
+    </servlet-mapping>
+    <!-- source: pattern://a565771c44e432389f691496, pattern://a565771c44e432389f691496#path -->
+    <servlet-mapping>
+        <servlet-name>Connector_Web_Application</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Hosting_Default</servlet-name>
+        <url-pattern>/index.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Hosting_Default</servlet-name>
+        <url-pattern>/favicon.ico</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Hosting_Default</servlet-name>
+        <url-pattern>/resources/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Hosting_Default</servlet-name>
+        <url-pattern>/errorpages/*</url-pattern>
+    </servlet-mapping>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <mime-mapping>
+        <extension>css</extension>
+        <mime-type>text/css</mime-type>
+    </mime-mapping>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <mime-mapping>
+        <extension>ico</extension>
+        <mime-type>image/x-icon</mime-type>
+    </mime-mapping>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <mime-mapping>
+        <extension>png</extension>
+        <mime-type>image/png</mime-type>
+    </mime-mapping>
+    <!-- source: pattern://a746982f1d932756f134d771 -->
+    <mime-mapping>
+        <extension>html</extension>
+        <mime-type>text/html</mime-type>
+    </mime-mapping>
+</web-app>

@@ -1,0 +1,53 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisComponent"
+metadata:
+  name: "proxy"
+  namespace: "component"
+  labels:
+    deploymentTarget: "proxy"
+  annotations:
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "00d6ee63cd07feac46cc9b93"
+spec:
+  type: "NevisProxy"
+  replicas: 1
+  version: "5.0"
+  gitInitVersion: "1.0"
+  runAsNonRoot: true
+  ports:
+    https: 8443
+  resources:
+    limits:
+      cpu: "1000m"
+      memory: "1000Mi"
+    requests:
+      cpu: "20m"
+      memory: "100Mi"
+  livenessProbe:
+    https:
+      httpGet:
+        path: "/liveness"
+        scheme: "HTTPS"
+      initialDelaySeconds: 15
+      periodSeconds: 20
+      timeoutSeconds: 4
+  readinessProbe:
+    https:
+      httpGet:
+        path: "/readiness"
+        scheme: "HTTPS"
+      initialDelaySeconds: 15
+      periodSeconds: 20
+      timeoutSeconds: 4
+  podDisruptionBudget:
+    maxUnavailable: "50%"
+  git: null
+  database:
+    name: "proxy"
+    requiredVersion: "5.0"
+  keystores:
+  - "proxy-nevisauth-realm-identity"
+  - "proxy-a746982f1d932756f134d771"
+  truststores:
+  - "proxy-nevisauth-realm-signer-trust"
+  - "proxy-nevisauth-realm-tls-trust"

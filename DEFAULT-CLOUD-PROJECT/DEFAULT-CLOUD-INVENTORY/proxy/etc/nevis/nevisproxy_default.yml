@@ -1,0 +1,18 @@
+schemaVersion: 1.0
+instance:
+  type: "nevisproxy"
+  name: "default"
+  directory: "/var/opt/nevisproxy/default"
+  pid: "file:///var/opt/nevisproxy/default/run/navajo.pid"
+  source:
+    url: "/nevisadmin/#/projects/DEFAULT-CLOUD-PROJECT/patterns/00d6ee63cd07feac46cc9b93"
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "00d6ee63cd07feac46cc9b93"
+    patternClass: "ch.nevis.admin.v4.plugin.nevisproxy.patterns.NevisProxyDeployable"
+  resources:
+    ports:
+    - "0.0.0.0:8443"
+  control:
+    start: "systemctl restart nevisproxy@default"
+    stop: "systemctl stop nevisproxy@default"
+    status: "/var/opt/nevisproxy/default/run/status.sh"

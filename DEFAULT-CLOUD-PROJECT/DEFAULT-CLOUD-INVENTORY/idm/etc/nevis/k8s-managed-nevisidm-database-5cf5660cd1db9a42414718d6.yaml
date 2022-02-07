@@ -1,0 +1,19 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisDatabase"
+metadata:
+  name: "idm"
+  namespace: "component"
+  labels:
+    deploymentTarget: "idm"
+  annotations:
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "5cf5660cd1db9a42414718d6"
+spec:
+  type: "NevisIDM"
+  version: "7.5"
+  url: "nevisk8smariadb.mariadb.database.azure.com"
+  port: 3306
+  database: "nevisidm"
+  migrate: true
+  rootCredentials:
+    name: "root-creds"

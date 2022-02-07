@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+    <appender name="SERVER" class="org.apache.log4j.ConsoleAppender">
+        <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[esauth4sv.log] %d{ISO8601} %-15.15t %12X{conversationId}-%X{transferId} %-20.20c %-5.5p %X{indent}%m%n"/>
+        </layout>
+    </appender>
+    <category name="AuthEngine">
+        <priority value="WARN"/>
+    </category>
+    <category name="EsAuthStart">
+        <priority value="INFO"/>
+    </category>
+    <category name="AuthPerf">
+        <priority value="WARN"/>
+    </category>
+    <category name="Vars">
+        <priority value="WARN"/>
+    </category>
+    <category name="OOC">
+        <priority value="WARN"/>
+    </category>
+    <category name="PKI">
+        <priority value="WARN"/>
+    </category>
+    <category name="WsClient">
+        <priority value="WARN"/>
+    </category>
+    <category name="ResourcePool">
+        <priority value="WARN"/>
+    </category>
+    <category name="Mail">
+        <priority value="WARN"/>
+    </category>
+    <category name="EL">
+        <priority value="WARN"/>
+    </category>
+    <category name="Store">
+        <priority value="WARN"/>
+    </category>
+    <category name="SessCoord">
+        <priority value="WARN"/>
+    </category>
+    <category name="Syncer">
+        <priority value="WARN"/>
+    </category>
+    <category name="EsAuthSOAPWrap">
+        <priority value="WARN"/>
+    </category>
+    <category name="REST">
+        <priority value="WARN"/>
+    </category>
+    <category name="RadiusFacade">
+        <priority value="WARN"/>
+    </category>
+    <category name="WebService">
+        <priority value="WARN"/>
+    </category>
+    <category name="STS">
+        <priority value="WARN"/>
+    </category>
+    <category name="StdStates">
+        <priority value="WARN"/>
+    </category>
+    <category name="IdmAuth">
+        <priority value="WARN"/>
+    </category>
+    <category name="X509State">
+        <priority value="WARN"/>
+    </category>
+    <category name="X509">
+        <priority value="WARN"/>
+    </category>
+    <category name="JNDIState">
+        <priority value="WARN"/>
+    </category>
+    <category name="JNDI">
+        <priority value="WARN"/>
+    </category>
+    <category name="Kerberos">
+        <priority value="WARN"/>
+    </category>
+    <category name="Radius">
+        <priority value="WARN"/>
+    </category>
+    <category name="SAP">
+        <priority value="WARN"/>
+    </category>
+    <category name="Saml">
+        <priority value="WARN"/>
+    </category>
+    <category name="XML">
+        <priority value="WARN"/>
+    </category>
+    <category name="DynCert">
+        <priority value="WARN"/>
+    </category>
+    <category name="TAN">
+        <priority value="WARN"/>
+    </category>
+    <category name="wstrust">
+        <priority value="WARN"/>
+    </category>
+    <category name="wsfed">
+        <priority value="WARN"/>
+    </category>
+    <category name="JDBCState">
+        <priority value="WARN"/>
+    </category>
+    <category name="wss4j">
+        <priority value="WARN"/>
+    </category>
+    <category name="Captcha">
+        <priority value="WARN"/>
+    </category>
+    <category name="Cache">
+        <priority value="WARN"/>
+    </category>
+    <category name="MSS">
+        <priority value="WARN"/>
+    </category>
+    <category name="SecToken">
+        <priority value="WARN"/>
+    </category>
+    <category name="JWT">
+        <priority value="WARN"/>
+    </category>
+    <category name="OAuth2">
+        <priority value="WARN"/>
+    </category>
+    <category name="OAuth2Consumer">
+        <priority value="WARN"/>
+    </category>
+    <category name="OIDCRelyingParty">
+        <priority value="WARN"/>
+    </category>
+    <category name="Script">
+        <priority value="WARN"/>
+    </category>
+    <category name="Swissphone">
+        <priority value="WARN"/>
+    </category>
+    <category name="jcan.Op">
+        <priority value="WARN"/>
+    </category>
+    <category name="jcan.OpContent">
+        <priority value="WARN"/>
+    </category>
+    <category name="ch.nevis.events">
+        <priority value="WARN"/>
+    </category>
+    <category name="ch.nevis.jcan.sectoken">
+        <priority value="WARN"/>
+    </category>
+    <category name="httpclient.wire">
+        <priority value="WARN"/>
+    </category>
+    <category name="org.apache.catalina.loader.WebappClassLoader">
+        <priority value="FATAL"/>
+    </category>
+    <category name="org.apache.catalina.startup.HostConfig">
+        <priority value="ERROR"/>
+    </category>
+    <category name="org.apache.commons.httpclient.HttpMethodBase">
+        <priority value="ERROR"/>
+    </category>
+    <root>
+        <priority value="WARN"/>
+        <appender-ref ref="SERVER"/>
+    </root>
+</log4j:configuration>

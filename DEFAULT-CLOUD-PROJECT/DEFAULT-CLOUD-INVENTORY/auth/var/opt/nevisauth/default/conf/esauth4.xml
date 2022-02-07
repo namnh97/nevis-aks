@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE esauth-server SYSTEM "/opt/nevisauth/dtd/esauth4.dtd">
+<esauth-server instance="auth">
+    <SessionCoordinator mode="default">
+        <!-- source: pattern://06d2b7aba1bd2b7d8d37da21, pattern://d9a865b6d733d073ad1f2c5f, pattern://d5206b1bc015c538aa155cd5, pattern://d9a865b6d733d073ad1f2c5f -->
+        <SessionCache name="SessionCache" initialInactivityTimeout="600" inactivityTimeout="43200" maxLifetime="43200" failSafe="true">
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncProvider" value="jdbc"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncUser" value="pipe:///var/opt/nevisauth/default/conf/credentials/dbUser"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncPassword" value="pipe:///var/opt/nevisauth/default/conf/credentials/dbPassword"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncTarget" value="jdbc:mariadb://nevisk8smariadb.mariadb.database.azure.com:3306/NSS"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncDelay" value="0"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncThreads" value="5"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncFailRetryPeriod" value="0"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncFailRetryCount" value="0"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncRefreshInterval" value="0"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncPullInitial" value="false"/>
+            <!-- source: pattern://d5206b1bc015c538aa155cd5 -->
+            <property name="syncUnauthenticSessions" value="true"/>
+        </SessionCache>
+        <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+        <TokenAssembler name="DefaultTokenAssembler">
+            <Selector default="true"/>
+            <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+            <TokenSpec ttl="43200">
+                <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+                <field src="session" key="ch.nevis.session.sessid" as="sessid"/>
+                <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+                <field src="session" key="ch.nevis.session.userid" as="userid"/>
+                <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+                <field src="session" key="ch.nevis.session.authlevel" as="authLevel"/>
+                <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+                <field src="session" key="ch.nevis.session.esauthid" as="esauthid"/>
+                <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+                <field src="session" key="ch.nevis.session.entryid" as="entryid"/>
+                <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+                <field src="session" key="ch.nevis.session.loginid" as="loginId"/>
+                <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+                <field src="session" key="ch.nevis.session.domain" as="domain"/>
+                <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+                <field src="session" key="ch.nevis.session.secroles" as="roles"/>
+            </TokenSpec>
+            <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+            <Signer key="DefaultSigner"/>
+        </TokenAssembler>
+        <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+        <TokenAssembler name="Token_nevisAuth_Realm_NEVIS_SecToken">
+            <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+            <Selector default="false"/>
+            <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+            <TokenSpec ttl="43200">
+                <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+                <field src="request" key="UserId" as="userid"/>
+                <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+                <field src="session" key="ch.nevis.session.loginid" as="loginId"/>
+                <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+                <field src="session" key="ch.adnovum.nevisidm.profileId" as="profileId"/>
+                <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+                <field src="session" key="ch.adnovum.nevisidm.clientId" as="clientId"/>
+                <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+                <field src="request" key="ActualRoles" as="roles"/>
+            </TokenSpec>
+            <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+            <Signer key="Signer_NEVIS_SecToken"/>
+        </TokenAssembler>
+        <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+        <KeyStore name="DefaultKeyStore">
+            <!-- source: pattern://06d2b7aba1bd2b7d8d37da21 -->
+            <KeyObject name="DefaultSigner" certificate="/var/opt/keys/own/auth-sh4r3d-default-default-signer/cert.pem" privateKey="/var/opt/keys/own/auth-sh4r3d-default-default-signer/keystore.jks" passPhrase="pipe:///var/opt/keys/own/auth-sh4r3d-default-default-signer/keypass"/>
+            <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+            <KeyObject name="Signer_NEVIS_SecToken" certificate="/var/opt/keys/own/auth-sh4r3d-nevis-sectoken-signer/cert.pem" privateKey="/var/opt/keys/own/auth-sh4r3d-nevis-sectoken-signer/keystore.jks" passPhrase="pipe:///var/opt/keys/own/auth-sh4r3d-nevis-sectoken-signer/keypass"/>
+        </KeyStore>
+    </SessionCoordinator>
+    <!-- source: pattern://06d2b7aba1bd2b7d8d37da21, pattern://d9a865b6d733d073ad1f2c5f -->
+    <AuthEngine useLiteralDictionary="true" literalDictionaryLanguages="en,de,fr,it" inputLanguageCookie="LANG" compatLevel="none" addAutheLevelToSecRoles="true" classPath="/opt/nevisidmcl/nevisauth/lib:/opt/nevisauth/plugin" propagateSession="false">
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <Domain name="nevisAuth_Realm" default="false" inactiveInterval="7200" reauthInterval="0" resetAuthenticationCondition="${inargs:cancel}">
+            <Entry method="authenticate" state="nevisAuth_Realm_nevisIDM_Password_Login"/>
+            <Entry method="stepup" state="nevisAuth_Realm_Selector"/>
+        </Domain>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <AuthState name="nevisAuth_Realm_nevisIDM_Password_Login" class="ch.nevis.idm.authstate.IdmPasswordVerifyState" final="false">
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="clientNotFound" next="nevisAuth_Realm_nevisIDM_Password_Login"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="disabled" next="nevisAuth_Realm_nevisIDM_Password_Login"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="failed" next="nevisAuth_Realm_nevisIDM_Password_Login"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="lockWarn" next="nevisAuth_Realm_nevisIDM_Password_Login"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="locked" next="nevisAuth_Realm_nevisIDM_Password_Login"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="nowLocked" next="nevisAuth_Realm_nevisIDM_Password_Login"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="ok" next="nevisAuth_Realm_nevisIDM_Password_Login-IdmPostProcessing" authLevel="1"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="pwChange" next="nevisAuth_Realm_nevisIDM_Password_Login-IdmPasswordChange"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="tmpLocked" next="nevisAuth_Realm_nevisIDM_Password_Login"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <Response value="AUTH_CONTINUE">
+                <!-- source: pattern://4e74853adf0195890ede7acf -->
+                <Gui name="AuthUidPwDialog" label="title.login">
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="lasterror" type="error" label="${notes:lasterrorinfo}" value="${notes:lasterror}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="info" type="info" label="info.login"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="isiwebuserid" type="text" label="prompt.userid" value="${notes.loginid}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="isiwebpasswd" type="pw-text" label="prompt.password"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="submit" type="button" label="continue.button.label"/>
+                </Gui>
+            </Response>
+            <propertyRef name="nevisIDM_Connector"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <property name="user.loginType" value="LOGINID"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <property name="client.name" value="Default"/>
+        </AuthState>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <AuthState name="nevisAuth_Realm_nevisIDM_Password_Login-IdmPostProcessing" class="ch.nevis.idm.authstate.IdmGetPropertiesState" final="false">
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="SOAP:showGui" next="nevisAuth_Realm_Check_Done"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="default" next="nevisAuth_Realm_Check_Done"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="ok" next="nevisAuth_Realm_Check_Done"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="showGui" next="nevisAuth_Realm_nevisIDM_Password_Login-IdmPostProcessing"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <Response value="AUTH_CONTINUE">
+                <!-- source: pattern://4e74853adf0195890ede7acf -->
+                <Gui name="AuthProfileSelectionDialog">
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="lasterror" type="error" label="${notes:lasterrorinfo}" value="${notes:lasterror}"/>
+                </Gui>
+            </Response>
+            <propertyRef name="nevisIDM_Connector"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <property name="user.attributes" value="mobile, email, extId"/>
+        </AuthState>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <AuthState name="nevisAuth_Realm_nevisIDM_Password_Login-IdmPasswordChange" class="ch.nevis.idm.authstate.IdmChangePasswordState" final="false">
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="default" next="nevisAuth_Realm_nevisIDM_Password_Login-IdmPasswordChange"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="ok" next="nevisAuth_Realm_nevisIDM_Password_Login-IdmPostProcessing" authLevel="1"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <ResultCond name="policyFailure" next="nevisAuth_Realm_nevisIDM_Password_Login-IdmPasswordChange"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <Response value="AUTH_CONTINUE">
+                <!-- source: pattern://4e74853adf0195890ede7acf -->
+                <Gui name="AuthUidPwDialog" label="title.pwchange.label">
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="lasterror" type="error" label="${notes:lasterrorinfo}" value="${notes:lasterror}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.minLength" type="error" label="${notes.policyFailure.regex.minLength}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.maxLength" type="error" label="${notes.policyFailure.regex.maxLength}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.upper" type="error" label="${notes.policyFailure.regex.upper}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.lower" type="error" label="${notes.policyFailure.regex.lower}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.numeric" type="error" label="${notes.policyFailure.regex.numeric}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.nonLetter" type="error" label="${notes.policyFailure.regex.nonLetter}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.nonAlnum" type="error" label="${notes.policyFailure.regex.nonAlnum}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.control" type="error" label="${notes.policyFailure.regex.control}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.nonGraph" type="error" label="${notes.policyFailure.regex.nonGraph}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.nonAscii" type="error" label="${notes.policyFailure.regex.nonAscii}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.dictionary" type="error" label="${notes.policyFailure.dictionary}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.history.History" type="error" label="${notes.policyFailure.history.History}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyFailure.regex.maxCharacterRepetitions" type="error" label="${notes.policyFailure.regex.maxCharacterRepetitions}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.title" type="info" label="#{!notes.containsKey('lasterror') || notes.lasterror == '6' ? 'policyInfo.title' : ''}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.minLength" type="info" label="#{notes['policyInfo.regex.minLength'].contains('[0]') ? '' : notes['policyInfo.regex.minLength']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.maxLength" type="info" label="#{notes['policyInfo.regex.maxLength'].contains('[0]') ? '' : notes['policyInfo.regex.maxLength']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.upper" type="info" label="#{notes['policyInfo.regex.upper'].contains('[0]') ? '' : notes['policyInfo.regex.upper']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.lower" type="info" label="#{notes['policyInfo.regex.lower'].contains('[0]') ? '' : notes['policyInfo.regex.lower']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.numeric" type="info" label="#{notes['policyInfo.regex.numeric'].contains('[0]') ? '' : notes['policyInfo.regex.numeric']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.nonLetter" type="info" label="#{notes['policyInfo.regex.nonLetter'].contains('[0]') ? '' : notes['policyInfo.regex.nonLetter']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.nonAlnum" type="info" label="#{notes['policyInfo.regex.nonAlnum'].contains('[0]') ? '' : notes['policyInfo.regex.nonAlnum']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.control" type="info" label="#{notes['policyInfo.regex.control'].contains('[0]') ? '' : notes['policyInfo.regex.control']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.nonGraph" type="info" label="#{notes['policyInfo.regex.nonGraph'].contains('[0]') ? '' : notes['policyInfo.regex.nonGraph']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.nonAscii" type="info" label="#{notes['policyInfo.regex.nonAscii'].contains('[0]') ? '' : notes['policyInfo.regex.nonAscii']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.dictionary" type="info" label="${notes.policyInfo.dictionary}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.history.History" type="info" label="#{notes['policyInfo.history.History'].contains('History[0]') ? '' : notes['policyInfo.history.History']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="policyInfo.regex.maxCharacterRepetitions" type="info" label="#{notes['policyInfo.regex.maxCharacterRepetitions'].contains('[0]') ? '' : notes['policyInfo.regex.maxCharacterRepetitions']}"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="isiwebpasswd" type="pw-text" label="prompt.password"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="isiwebnewpw1" type="pw-text" label="prompt.newpassword"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="isiwebnewpw2" type="pw-text" label="prompt.newpassword.confirm"/>
+                    <!-- source: pattern://4e74853adf0195890ede7acf -->
+                    <GuiElem name="submit" type="submit" label="button.submit"/>
+                </Gui>
+            </Response>
+            <propertyRef name="nevisIDM_Connector"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <property name="legacyLitDictMode" value="false"/>
+        </AuthState>
+        <!-- source: pattern://4e74853adf0195890ede7acf -->
+        <AuthState name="nevisIDM_Connector" class="ch.nevis.esauth.auth.states.standard.AuthGeneric" final="false">
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <property name="login.service.connection.0" value="https://idm:8989/nevisidm/services/v1/LoginService"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf -->
+            <property name="admin.service.connection.0" value="https://idm:8989/nevisidm/services/v1/AdminService"/>
+        </AuthState>
+        <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+        <AuthState name="nevisAuth_Realm_Check_Done" class="ch.nevis.esauth.auth.states.scripting.ScriptState" final="false">
+            <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+            <ResultCond name="default" next="nevisAuth_Realm_Start_Wrapup_Sequence"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+            <Response value="AUTH_DONE">
+                <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+                <Gui name="ContinueResponse"/>
+            </Response>
+            <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+            <property name="script" value="file:///var/opt/nevisauth/default/conf/auth_done_check.groovy"/>
+        </AuthState>
+        <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+        <AuthState name="nevisAuth_Realm_Start_Wrapup_Sequence" class="ch.nevis.esauth.auth.states.scripting.ScriptState" final="false">
+            <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+            <ResultCond name="ok" next="nevisAuth_Realm_Authentication_Done"/>
+            <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+            <Response value="AUTH_DONE">
+                <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+                <Gui name="ContinueResponse"/>
+            </Response>
+            <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+            <property name="script" value="file:///var/opt/nevisauth/default/conf/wrapup_sequence_start.groovy"/>
+        </AuthState>
+        <!-- source: pattern://4e74853adf0195890ede7acf, pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+        <AuthState name="nevisAuth_Realm_Authentication_Done" class="ch.nevis.esauth.auth.states.standard.AuthDone" final="false">
+            <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+            <Response value="AUTH_DONE">
+                <!-- source: pattern://4e74853adf0195890ede7acf, pattern://d9a865b6d733d073ad1f2c5f -->
+                <Gui name="ContinueResponse"/>
+            </Response>
+        </AuthState>
+        <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+        <AuthState name="nevisAuth_Realm_Selector" class="ch.nevis.esauth.auth.states.standard.ConditionalDispatcherState" final="false">
+            <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+            <ResultCond name="NEVIS_SecToken" next="nevisAuth_Realm_NEVIS_SecToken"/>
+            <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+            <ResultCond name="nomatch" next="nevisAuth_Realm_Start_Wrapup_Sequence"/>
+            <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+            <Response value="AUTH_ERROR">
+                <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+                <Arg name="ch.nevis.isiweb4.response.status" value="403"/>
+            </Response>
+            <!-- source: pattern://d9a865b6d733d073ad1f2c5f -->
+            <property name="condition:NEVIS_SecToken" value="${request:requiredRoles:^token.NEVIS_SecToken$:true}"/>
+        </AuthState>
+        <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+        <AuthState name="nevisAuth_Realm_NEVIS_SecToken" class="ch.nevis.esauth.auth.states.sectoken.TokenAssemblerState" final="false">
+            <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+            <ResultCond name="default" next="nevisAuth_Realm_Check_Done" authLevel="token.NEVIS_SecToken"/>
+            <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+            <Response value="AUTH_ERROR">
+                <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+                <Arg name="ch.nevis.isiweb4.response.status" value="403"/>
+            </Response>
+            <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+            <property name="assembler" value="Token_nevisAuth_Realm_NEVIS_SecToken"/>
+            <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+            <property name="key" value="token.NEVIS_SecToken"/>
+            <!-- source: pattern://7009abb038f4efe4cddc7e0d -->
+            <property name="generateNow" value="true"/>
+        </AuthState>
+    </AuthEngine>
+</esauth-server>

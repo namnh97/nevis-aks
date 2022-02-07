@@ -1,0 +1,15 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisKeyStore"
+metadata:
+  name: "proxy-nevisauth-realm-identity"
+  namespace: "component"
+  labels:
+    deploymentTarget: "proxy"
+spec:
+  cn: "proxy"
+  usage: "<reserved for future use>"
+  san:
+    dns:
+    - "proxy"
+    - "proxy.component"
+    email: []

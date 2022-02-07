@@ -1,0 +1,201 @@
+/********************************************************
+ * Layout
+ ********************************************************/
+
+html { /* magic to position footer */
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	margin-bottom: 76px; /* == footer height */
+}
+
+.container, .container-fluid {
+ 	padding-left: 36px;
+	padding-right: 36px;
+}
+
+nav {
+	min-height: 100px;
+	padding: 36px;
+}
+
+header {
+	margin-bottom: 16px; /* h1.logintitle adds 20px => 36px */
+}
+
+.container {
+ 	min-width: 260px;
+ 	max-width: 700px;
+}
+
+h1 {
+	margin-bottom: 50px;
+}
+
+footer {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	padding: 0 36px;
+}
+
+img {
+	width: 100%;
+}
+
+/********************************************************
+ * Header
+ ********************************************************/
+
+header .logo {
+	/* width: 20%;*/
+	/*max-width: 600px;*/
+	max-height: 150px;
+	width: auto;
+}
+
+/********************************************************
+ * Dropdown
+ ********************************************************/
+a.dropdown-toggle {
+	text-decoration: none;
+}
+
+a.dropdown-toggle:hover {
+	color: #168CA9;
+	border-bottom: 3px solid #168CA9;
+}
+
+.dropdown-menu {
+	padding: 5px 0;
+}
+
+.dropdown-menu li > a {
+	padding: 6px 28px;
+}
+
+.dropdown-menu a > .prefix {
+	display: inline-block;
+	min-width: 22px;
+	margin-right: 28px;
+	text-align: right;
+}
+
+/********************************************************
+ * Form
+ ********************************************************/
+
+/* Labels should not be bold */
+label {
+	font-weight: normal;
+}
+
+/* Make error messages bold */
+.has-error .help-block {
+	font-weight: bold;
+}
+
+/* Change button size, by default 116px in width */
+.btn {
+	min-width: 116px;
+	padding: 3px 12px;
+}
+
+/* Disable gradient in buttons, ughhhh */
+.btn.btn-primary {
+	border-color: transparent;
+	background-image: none;
+	text-shadow: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}
+
+.help-block a, .help-block a:visited {
+	color: #168CA9;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.help-block a:hover {
+	color: #168CA9;
+  text-decoration: underline;
+}
+
+/********************************************************
+ * Footer
+ ********************************************************/
+footer .row {
+	margin: 36px 0 0 0;
+	height: 40px;
+	padding-top: 14px;
+	line-height: 26px; /* to center text: height - padding-top = 26px */
+	border-top: 1px solid #168CA9;
+}
+
+footer .row > div { /* Fix alignment between border + text on Bootstrap grid */
+	padding: 0;
+}
+
+footer .logo-round-container {
+	position: relative;
+}
+
+footer .logo-round {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: -33px; /* found visually with Chrome Dev Tools */
+	height: 36px;
+	width: 36px;
+	border: 1px solid #00868c;
+	border-radius: 18px;
+	background: #fff;
+	padding: 8px;
+}
+
+footer .logo-round > img {
+	display: block;
+}
+
+#dispatchTargets {
+	margin-top: 20px;
+}
+
+/********************************************************
+ * Social login
+ ********************************************************/
+.btn.line {
+    background-color: transparent;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 1.5em 0 1em;
+    border: 0.5px solid #ccc;
+    pointer-events: none;
+}
+
+.btn.socialLogin {
+    background-color: #fff;
+    border: thin solid #ccc;
+    color: #000;
+    font-weight: 600;
+    position: relative;
+    margin: 5px;
+    min-width: 140px;
+    width: 210px;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.socialLogin img {
+    width: 1.5em;
+    height: 108%;
+    margin-right: 0.5em;
+}
+
+.btn.apple img {
+    width: 1.2em;
+}

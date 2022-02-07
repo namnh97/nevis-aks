@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Navajo SYSTEM "/opt/nevisproxy/dtd/navajo_1_0.dtd">
+<Navajo>
+    <!-- source: pattern://00d6ee63cd07feac46cc9b93 -->
+    <Service name="nevisproxy" serverTemplate="/opt/nevisproxy/etc/server2.template" hostTemplate="/opt/nevisproxy/etc/host2.template" spoolDir="/var/opt/nevisproxy/default" commandLine="-DFOREGROUND">
+        <!-- source: pattern://00d6ee63cd07feac46cc9b93 -->
+        <Core workDir="/var/opt/nevisproxy/default/run" memorySize="10000000"/>
+        <!-- source: pattern://00d6ee63cd07feac46cc9b93 -->
+        <Timer periodicity="60"/>
+        <!-- source: pattern://00d6ee63cd07feac46cc9b93 -->
+        <Server User="nevis" Group="root" ServerAdmin="admin@company.com" ServerName="proxy" Timeout="30" MaxClients="600" MaxRequestsPerChild="0" KeepAlive="on" KeepAliveTimeout="5" MaxKeepAliveRequests="100" LimitRequestLine="5120" LimitRequestBody="512000" LimitRequestFields="50" LimitRequestFieldsize="5120" ServerRoot="/var/opt/nevisproxy/default" DocumentRoot="/var/opt/nevisproxy/default/htdocs" CoreDumpDirectory="" ErrorLog="&quot;|/bin/sed -u s/^/[apache.log]\ /g&quot;" Loglevel="notice" TransferLog="&quot;|/bin/stdbuf -oL /bin/egrep -v GET./.....?ness&quot;" LogFormat="&quot;[access.log] %h %l %u %t \&quot;%r\&quot; %&gt;s %b %{content-length}i %T %v \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot; trID=%{UNIQUE_ID}e&quot;" SSLPassPhraseDialog="builtin" SSLSessionCache="shmcb:/var/opt/nevisproxy/default/run/apache_shmcb"/>
+        <!-- source: pattern://a746982f1d932756f134d771 -->
+        <Connector port="443" name="nevisk8s.southeastasia.cloudapp.azure.com" listen="0.0.0.0:8443">
+            <!-- source: pattern://a746982f1d932756f134d771, pattern://a746982f1d932756f134d771#keystore -->
+            <SSL SSLCipherSuite="ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256" SSLOptions="+OptRenegotiate +StdEnvVars +ExportCertData" SSLProtocol="-all +TLSv1.2 -TLSv1.3" SSLCertificateFile="/var/opt/keys/own/proxy-a746982f1d932756f134d771/cert.pem" SSLCertificateKeyFile="/var/opt/keys/own/proxy-a746982f1d932756f134d771/key.pem" SSLCertificateChainFile="/var/opt/keys/own/proxy-a746982f1d932756f134d771/ca-chain.pem" SSLInsecureRenegotiation="off" SSLHonorCipherOrder="on"/>
+            <!-- source: pattern://a746982f1d932756f134d771 -->
+            <UserAgent pattern=".*" identification="none" cookieHttpOnly="false"/>
+        </Connector>
+        <!-- source: pattern://00d6ee63cd07feac46cc9b93 -->
+        <Engine defaultHost="nevisk8s.southeastasia.cloudapp.azure.com">
+            <!-- source: pattern://00d6ee63cd07feac46cc9b93 -->
+            <HttpSession maxEntries="0"/>
+            <!-- source: pattern://a746982f1d932756f134d771 -->
+            <Host name="nevisk8s.southeastasia.cloudapp.azure.com">
+                <!-- source: pattern://a746982f1d932756f134d771 -->
+                <Context entryURI="/" unsecureConnection="allow" trailingSlashRedirect="true" filePreload="false" docBase="/var/opt/nevisproxy/default/host-nevisk8s.southeastasia.cloudapp.azure.com" path="" allowedMethods="ALL-HTTP ALL-WEBDAV -TRACE -CONNECT"/>
+            </Host>
+        </Engine>
+    </Service>
+</Navajo>

@@ -1,0 +1,11 @@
+<footer id="footer" class="text-primary">
+    <div class="row small">
+        <div class="col-md-4 hidden-xs hidden-sm">Copyright &#169; 2021 NEVIS Security AG</div>
+        <div class="col-xs-12 col-md-4 text-center text-uppercase logo-round-container">
+            <div class="logo-round center-block">
+                <img src="${login.appDataPath}/resources/logo.png" alt="NEVIS Security Suite">
+            </div>
+            <strong>NEVIS Security Suite</strong>
+        </div>
+    </div>
+</footer>

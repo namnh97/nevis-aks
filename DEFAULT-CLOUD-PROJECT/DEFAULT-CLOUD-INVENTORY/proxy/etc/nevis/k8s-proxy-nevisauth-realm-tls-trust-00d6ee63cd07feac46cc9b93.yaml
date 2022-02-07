@@ -1,0 +1,11 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisTrustStore"
+metadata:
+  name: "proxy-nevisauth-realm-tls-trust"
+  namespace: "component"
+  labels:
+    deploymentTarget: "proxy"
+spec:
+  keystores:
+  - name: "auth-default-identity"
+    namespace: "component"

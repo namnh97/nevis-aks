@@ -1,0 +1,77 @@
+## if only form, then we include javascript here (start of body)
+#if ($isFormRequest)
+    #parse("${templatePath}/js_start.vm")
+#end
+
+#set ($formTarget = $utils.escapeHtmlAttribute($gui.target.replaceAll('&?language=[^&]*','')))
+
+#if ($useFormEncryption)
+    <div id="e2eeSplashScreen" style="display:none;">
+        <h2 class="logintitle text-center">$gui.label</h2>
+        <div class="field info" id="info">$text.get("e2ee.splashscreen.msg")</div>
+    </div>
+#end
+
+<div id="loginform">
+
+    <form id="$gui.name" name="$gui.name"
+    #if ($useFormEncryption) onsubmit="new e2eenc().encryptForm('$gui.encryption','$gui.name')" #end
+    method="POST" target="_self" action="$formTarget" autocomplete="off" accept-charset="UTF-8"  class="form-horizontal">
+
+		<h1 class="logintitle text-center">$gui.label</h1>
+
+        #set ($tabindex = 0)
+        #set ($policyFailureOpen = false)
+	    #set ($policyInfoOpen = false)
+
+	    #foreach ($guiElem in $gui.getGuiElems())
+	        #set ($tabindex = $tabindex+1)
+            #if ($guiElem.name.startsWith("policyInfo") && $guiElem.label && $guiElem.label.length() > 0)
+                #if (!$policyInfoOpen)
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-6">
+                    #set ($policyInfoOpen = true)
+                #end
+                <span class="help-block small" id="$guiElem.name">$guiElem.label</span>
+            #elseif ($guiElem.name.startsWith("policyFailure") && $guiElem.label && $guiElem.label.length() > 0)
+                #if (!$policyFailureOpen)
+                    <div class="form-group has-error">
+                        <div class="col-sm-offset-3 col-sm-6">
+                    #set ($policyFailureOpen = true)
+                #end
+                <span class="help-block small" id="$guiElem.name">$guiElem.label</span>
+            #else
+                #if (!$guiElem.name.startsWith("policyInfo") && $policyInfoOpen) ## close
+                        </div>
+                    </div>
+                    #set ($policyInfoOpen = false)
+                #end
+                #if (!$guiElem.name.startsWith("policyFailure") && $policyFailureOpen) ## close
+                        </div>
+                    </div>
+                    #set ($policyFailureOpen = false)
+                #end
+                #renderFormField($guiElem, $gui, $tabindex)
+            #end
+	    #end
+
+        #if ($useFormEncryption)
+            <input type="hidden" name="e2eenc.fields" value="not-set">
+            <input type="hidden" name="e2eenc.iv" value="not-set">
+            <input type="hidden" name="e2eenc.encapsulation" value="not-set">
+        #end
+
+        #renderFormControls($gui)
+        #renderFormLinks($gui)
+    </form>
+
+    <!-- position input focus into first element of form -->
+    <script type="text/javascript">
+         document.forms['$gui.name'].elements[0].focus()
+    </script>
+
+    ## if only form, then we include javascript here (end of body)
+    #if ($isFormRequest)
+        #parse("${templatePath}/js_end.vm")
+    #end
+</div>

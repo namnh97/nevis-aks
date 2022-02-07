@@ -1,0 +1,18 @@
+schemaVersion: 1.0
+instance:
+  type: "nevisauth"
+  name: "default"
+  directory: "/var/opt/nevisauth/default"
+  pid: "systemctl show nevisauth@default -p MainPID | cut -d '=' -f2"
+  source:
+    url: "/nevisadmin/#/projects/DEFAULT-CLOUD-PROJECT/patterns/06d2b7aba1bd2b7d8d37da21"
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "06d2b7aba1bd2b7d8d37da21"
+    patternClass: "ch.nevis.admin.v4.plugin.nevisauth.patterns.NevisAuthDeployable"
+  resources:
+    ports:
+    - "0.0.0.0:8991"
+  control:
+    start: "systemctl restart nevisauth@default &"
+    stop: "systemctl stop nevisauth@default"
+    status: "systemctl status nevisauth@default"

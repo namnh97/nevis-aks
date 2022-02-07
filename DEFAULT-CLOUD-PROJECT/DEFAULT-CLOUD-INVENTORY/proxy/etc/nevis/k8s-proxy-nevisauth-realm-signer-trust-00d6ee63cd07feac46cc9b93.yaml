@@ -1,0 +1,11 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisTrustStore"
+metadata:
+  name: "proxy-nevisauth-realm-signer-trust"
+  namespace: "component"
+  labels:
+    deploymentTarget: "proxy"
+spec:
+  keystores:
+  - name: "auth-sh4r3d-default-default-signer"
+    namespace: "component"

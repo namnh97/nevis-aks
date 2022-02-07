@@ -1,0 +1,88 @@
+## This template is used to respond with a JSON format
+## In this case, the client is supposed to parse and show the data
+## The JSON data is close to the XML format of the GuiDesc
+
+#set ($target = $utils.escapeHtmlAttribute($gui.target.replaceAll('&?language=[^&]*','')))
+{
+    "name" : "$gui.name" ,
+    "target" : "$target" #if ($gui.label || $gui.language || $gui.domain || $gui.getGuiElems().size() > 0 || $gui.getGuiGroup().size() > 0), #end ## if
+
+#if ($gui.label)    "label" : "$gui.label" #if ($gui.language || $gui.domain || $gui.getGuiElems().size() > 0 || $gui.getGuiGroup().size() > 0), #end ## if
+#end ## if
+
+#if ($gui.language)    "language" : "$gui.language" #if ($gui.domain || $gui.getGuiElems().size() > 0 || $gui.getGuiGroup().size() > 0), #end ## if
+#end ## if ($gui.language)
+#if ($gui.domain)   "domain" : "$gui.domain" #if ($gui.getGuiElems().size() > 0 || $gui.getGuiGroup().size() > 0), #end ## if
+#end ## if ($gui.domain)
+
+#if ($gui.getGuiElems().size() > 0)
+    "elements" : [
+#set ($i = 0)
+#foreach ($guiElem in $gui.getGuiElems())
+    { 
+        "name" : "$guiElem.name",
+        "type" : "$guiElem.type",
+        "optional" : "$guiElem.optional", 
+        "label" : "$guiElem.label" #if ($guiElem.validation-failed || $guiElem.value || $guiElem.length || $guiElem.format), #end
+       #if ($guiElem.validation-failed) "validation-failed" : "$guiGroup.validationFailed" #if ($guiElem.value || $guiElem.length || $guiElem.format), #end
+       #end ## if ($guiElem.validation-failed)
+
+       #if ($guiElem.value) "value" : "$guiElem.value.replaceAll('\\\\','_ESCAPED_BACKSLASH_').replaceAll('\\"','_ESCAPED_QUOTE_').replaceAll('\\','\\\\').replaceAll('"','\\"').replaceAll('_ESCAPED_BACKSLASH_','\\\\').replaceAll('_ESCAPED_QUOTE_','\\"')" #if ($guiElem.length || $guiElem.format), #end
+       #end ## if ($guiElem.value)
+
+       #if ($guiElem.length) "max-length" : "$guiElem.length" #if ($guiElem.format), #end
+       #end ## if ($guiElem.length)
+
+       #if ($guiElem.format) "format" : "$guiElem.format"
+       #end 
+
+    }
+    #set ($i = $i + 1)
+    #if ($i < ($gui.getGuiElems().size())), #end
+
+#end ## loop
+    ] #if ($gui.getGuiGroup() && $gui.getGuiGroup().size() > 0), #end
+#end ## if ($gui.getGuiGroup() && $gui.getGuiElem().size() > 0)
+#if ($gui.getGuiGroup() && $gui.getGuiGroup().size() > 0)
+   "groups" : [
+       #set ($j = 0)
+	#foreach ($guiGroup in $gui.getGuiGroup())
+	    "name" : "$guiGroup.name",
+	    "type" : "$guiGroup.type",
+	    "label" : "$guiGroup.label",
+	    "multiple"  : "$guiGroup.multiple",
+	    "format" : "$guiGroup.format",
+	    "optional" : "$guiGroup.optional",
+	    "validation-failed" : "$guiGroup.validationFailed" #if ($gui.getGuiElems().length() > 0), #end
+	#if ($gui.getGuiElems() && $gui.getGuiElems().length() > 0)
+	    "elements" : [
+       #set ($i = 0)
+       #foreach ($guiElem in $gui.getGuiElems())
+             { 
+            "name" : "$guiElem.name",
+            "type" : "$guiElem.type",
+            "optional" : "$guiElem.optional",
+            "validation-failed" : "$guiGroup.validationFailed",
+            "label" : "$guiElem.label" #if ($guiElem.value || $guiElem.length || $guiElem.format), #end
+            #if ($guiElem.value)
+            "value" : "$guiElem.value.replaceAll('\\\\','_ESCAPED_BACKSLASH_').replaceAll('\\"','_ESCAPED_QUOTE_').replaceAll('\\','\\\\').replaceAll('"','\\"').replaceAll('_ESCAPED_BACKSLASH_','\\\\').replaceAll('_ESCAPED_QUOTE_','\\"')" #if ($guiElem.length || $guiElem.format), #end
+            #end ## if ($guiElem.value)
+            #if ($guiElem.length)
+            "max-length" : "$guiElem.length" #if ($guiElem.format), #end
+            #end ## if ($guiElem.length)
+            #if ($guiElem.format)
+            "format" : "$guiElem.format"
+            #end ## if ($guiElem.format)
+            } 
+            #set ($i = $i + 1)
+            #if ($i < ($gui.getGuiElems().size())), #end
+
+        #end ## loop
+	    ] #if ($foreach.hasNext), #end
+            #set ($j = $j + 1)
+            #if ($j < ($gui.getGuiGroup().size())), #end
+	  #end ## foreach ($guiGroup in $gui.getGuiGroup())
+	#end ## if ($gui.getGuiElem() && $gui.getGuiElem().size() > 0)
+    ]
+ #end ## if ($gui.getGuiGroup() && $gui.getGuiGroup().length() > 0)
+}

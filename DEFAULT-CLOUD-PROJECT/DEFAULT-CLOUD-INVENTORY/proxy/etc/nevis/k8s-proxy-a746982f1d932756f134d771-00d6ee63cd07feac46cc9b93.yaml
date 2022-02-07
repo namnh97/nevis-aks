@@ -1,0 +1,19 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisKeyStore"
+annotations:
+  proxyName: "nevisproxy-instance"
+  frontendAddress: "nevisk8s.southeastasia.cloudapp.azure.com"
+metadata:
+  name: "proxy-a746982f1d932756f134d771"
+  namespace: "component"
+  labels:
+    deploymentTarget: "proxy"
+spec:
+  cn: "nevisk8s.southeastasia.cloudapp.azure.com"
+  usage: "<reserved for future use>"
+  san:
+    dns:
+    - "nevisk8s.southeastasia.cloudapp.azure.com"
+    - "proxy"
+    - "proxy.component"
+    email: []

@@ -1,0 +1,18 @@
+schemaVersion: 1.0
+instance:
+  type: "nevislogrend"
+  name: "default"
+  directory: "/var/opt/nevislogrend/default"
+  pid: "systemctl show nevislogrend@default -p MainPID | cut -d '=' -f2"
+  source:
+    url: "/nevisadmin/#/projects/DEFAULT-CLOUD-PROJECT/patterns/89c988d526ac8228116c746e"
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "89c988d526ac8228116c746e"
+    patternClass: "ch.nevis.admin.v4.plugin.nevisauth.patterns.NevisLogrendDeployable"
+  resources:
+    ports:
+    - "0.0.0.0:8988"
+  control:
+    start: "systemctl restart nevislogrend@default"
+    stop: "systemctl stop nevislogrend@default"
+    status: "systemctl status nevislogrend@default"

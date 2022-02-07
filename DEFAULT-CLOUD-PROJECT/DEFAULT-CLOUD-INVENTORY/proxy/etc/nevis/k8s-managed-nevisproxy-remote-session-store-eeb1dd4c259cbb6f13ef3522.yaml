@@ -1,0 +1,19 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisDatabase"
+metadata:
+  name: "proxy"
+  namespace: "component"
+  labels:
+    deploymentTarget: "proxy"
+  annotations:
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "eeb1dd4c259cbb6f13ef3522"
+spec:
+  type: "NevisProxy"
+  version: "5.0"
+  url: "nevisk8smariadb.mariadb.database.azure.com"
+  port: 3306
+  database: "replicated_session_store"
+  migrate: true
+  rootCredentials:
+    name: "root-creds"

@@ -1,0 +1,19 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisDatabase"
+metadata:
+  name: "auth"
+  namespace: "component"
+  labels:
+    deploymentTarget: "auth"
+  annotations:
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "d5206b1bc015c538aa155cd5"
+spec:
+  type: "NevisAuth"
+  version: "4.33"
+  url: "nevisk8smariadb.mariadb.database.azure.com"
+  port: 3306
+  database: "NSS"
+  migrate: true
+  rootCredentials:
+    name: "root-creds"

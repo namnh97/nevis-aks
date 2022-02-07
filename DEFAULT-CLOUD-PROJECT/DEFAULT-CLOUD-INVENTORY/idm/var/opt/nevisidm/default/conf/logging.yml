@@ -1,0 +1,37 @@
+Configuration:
+  Properties:
+    Property:
+    - name: "LOG_PATTERN"
+      value: "%d{ISO8601} %-15.15t %-40.40c %-5.5p %m%n"
+  Appenders:
+    Console:
+    - name: "APPLICATION"
+      target: "SYSTEM_OUT"
+      PatternLayout:
+        Pattern: "[application.log] ${LOG_PATTERN}"
+    - name: "BATCHJOB"
+      target: "SYSTEM_OUT"
+      PatternLayout:
+        Pattern: "[batch.log] ${LOG_PATTERN}"
+  Loggers:
+    Logger:
+    - name: "ch.nevis.idm.standalone"
+      level: "INFO"
+      additivity: "false"
+      AppenderRef:
+      - ref: "APPLICATION"
+    - name: "jcan.Op"
+      level: "INFO"
+      additivity: "false"
+      AppenderRef:
+      - ref: "APPLICATION"
+    - name: "ch.nevis.idm.batch.jobs"
+      level: "INFO"
+      additivity: "false"
+      AppenderRef:
+      - ref: "BATCHJOB"
+    Root:
+      level: "ERROR"
+      additivity: "false"
+      AppenderRef:
+      - ref: "APPLICATION"

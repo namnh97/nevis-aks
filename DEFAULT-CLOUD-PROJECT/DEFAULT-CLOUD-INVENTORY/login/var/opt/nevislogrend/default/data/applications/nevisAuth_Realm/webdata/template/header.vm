@@ -1,0 +1,3 @@
+<header id="header" class="container-fluid">
+    <img class="logo center-block" src="${login.appDataPath}/resources/logo_animated.gif" alt="NEVIS Security Suite">
+</header>

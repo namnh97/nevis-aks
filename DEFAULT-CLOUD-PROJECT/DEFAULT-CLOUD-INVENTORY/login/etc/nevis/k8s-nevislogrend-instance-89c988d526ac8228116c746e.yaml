@@ -1,0 +1,45 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisComponent"
+metadata:
+  name: "login"
+  namespace: "component"
+  labels:
+    deploymentTarget: "login"
+  annotations:
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "89c988d526ac8228116c746e"
+spec:
+  type: "NevisLogrend"
+  replicas: 1
+  version: "1.15"
+  gitInitVersion: "1.0"
+  runAsNonRoot: true
+  ports:
+    rest: 8988
+    httpmanagement: 8997
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "1000Mi"
+    requests:
+      cpu: "10m"
+      memory: "500Mi"
+  livenessProbe:
+    httpmanagement:
+      httpGet:
+        path: "/nevislogrend/liveness"
+      initialDelaySeconds: 15
+      periodSeconds: 20
+      timeoutSeconds: 4
+  readinessProbe:
+    rest:
+      httpGet:
+        path: "/nevislogrend/health"
+      initialDelaySeconds: 15
+      periodSeconds: 20
+      timeoutSeconds: 4
+  podDisruptionBudget:
+    maxUnavailable: "50%"
+  git: null
+  keystores: []
+  truststores: []

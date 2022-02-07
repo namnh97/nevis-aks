@@ -1,0 +1,16 @@
+<script src="${login.appDataPath}/resources/dropdown.js"></script>
+
+<script src="${login.appDataPath}/resources/oauth_consent.js"></script>
+
+<script id="authcloud_include"
+        src="${login.appDataPath}/resources/authcloud_include.js"
+        data-form-name="$gui.name"></script>
+
+<script id="mauth_include"
+        src="${login.appDataPath}/resources/mauth_include.js"
+        data-form-name="$gui.name"></script>
+
+#if ($useFormEncryption)
+    <script src="${login.appDataPath}/resources/forge.bundle.js"></script>
+    <script src="${login.appDataPath}/resources/e2eenc.js"></script>
+#end

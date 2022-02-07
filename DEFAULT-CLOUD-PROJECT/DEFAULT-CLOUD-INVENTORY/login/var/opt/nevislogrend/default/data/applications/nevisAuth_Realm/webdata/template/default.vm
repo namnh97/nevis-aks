@@ -1,0 +1,63 @@
+#set($jsValidation = 1) ## enable JS validation, client-side
+
+#set($useFormEncryption = $gui.encryption && ($gui.encryption.length() > 0))
+
+#set($encryptionParamsOk = true)
+
+#if ($useFormEncryption)
+    #* check the mandatory e2eenc.publicKey GuiElem *#
+	#set($encryptionParamsOk = $gui.getGuiElem("e2eenc.publicKey") && ($gui.getGuiElem("e2eenc.publicKey") != "" ))
+#end
+
+#if (!$encryptionParamsOk)
+    $response.setStatus(502)
+
+#else
+
+    #set($isAjaxRequest = "XMLHttpRequest" == $login.requestHeaders.get("X-Requested-With"))
+    #set($acceptHeader = $login.requestHeaders.accept)
+
+    #if ($acceptHeader)
+        #set($isHtmlRequest = $acceptHeader.contains("text/html") || $acceptHeader.contains("*/*"))
+        #set($isJsonRequest = $acceptHeader.contains("application/json"))
+        #set($isSoapRequest = $acceptHeader.contains("application/soap+xml"))
+        #set($isXmlRequest = $acceptHeader.contains("application/xml")||$acceptHeader.contains("text/xml"))
+        #set($isCssRequest = $acceptHeader.contains("text/css"))
+    #else
+        #set($isHtmlRequest = true)
+        #set($isSoapRequest = false)
+        #set($isXmlRequest = false)
+        #set($isCssRequest = false)
+    #end
+
+    ## sending the query parameter render=form will render only the inner form
+    #set($isFormRequest = "form" == $login.requestParameters.render && $isHtmlRequest)
+
+    #parse("${templatePath}/macros.vm")
+
+    #if ($isHtmlRequest)
+        #if ($isFormRequest)
+            #parse("${templatePath}/form.vm")
+        #else
+            ## html.vm is generated from html provided via pattern
+            #parse("${templatePath}/html.vm")
+        #end
+    #end
+
+    ## AJAX requests: signal to JS-Client that login is required
+    #if ($isAjaxRequest)
+        $response.setStatus(401)
+        $response.setHeader("WWW-Authenticate","$gui.domain")
+    #end
+
+    #if (!$isHtmlRequest && $isXmlRequest)
+        $response.setHeader("Content-Type","text/xml")
+        ## emit custom XML here, use $utils.escapeXml to sanitize values coming from clients
+    #end
+
+    #if (!$isHtmlRequest && $isJsonRequest)
+        $response.setHeader("Content-Type","application/json")
+        #parse("${templatePath}/json.vm")
+        ## emit custom JSON here, use $utils.escapeJs to sanitize values coming from clients
+    #end
+#end

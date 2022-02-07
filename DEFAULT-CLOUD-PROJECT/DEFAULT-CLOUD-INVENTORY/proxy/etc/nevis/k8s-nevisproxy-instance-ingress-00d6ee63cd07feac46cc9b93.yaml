@@ -1,0 +1,16 @@
+apiVersion: "operator.nevis-security.ch/v1"
+kind: "NevisIngress"
+metadata:
+  name: "proxy"
+  namespace: "component"
+  labels:
+    deploymentTarget: "proxy"
+  annotations:
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "00d6ee63cd07feac46cc9b93"
+spec:
+  hosts:
+  - host: "nevisk8s.southeastasia.cloudapp.azure.com"
+    protocol: "HTTPS"
+    servicePort: 8443
+    serviceName: "proxy"

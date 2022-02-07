@@ -1,0 +1,18 @@
+schemaVersion: 1.0
+instance:
+  type: "nevisidm"
+  name: "default"
+  directory: "/var/opt/nevisidm/default"
+  pid: "systemctl show nevisidm@default -p MainPID | cut -d '=' -f2"
+  source:
+    url: "/nevisadmin/#/projects/DEFAULT-CLOUD-PROJECT/patterns/dd94e0bc55c8e5b543f82b1a"
+    projectKey: "DEFAULT-CLOUD-PROJECT"
+    patternId: "dd94e0bc55c8e5b543f82b1a"
+    patternClass: "ch.nevis.admin.v4.plugin.nevisidm.patterns.NevisIDMDeployable"
+  resources:
+    ports:
+    - "0.0.0.0:8989"
+  control:
+    start: "systemctl restart nevisidm@default"
+    stop: "systemctl stop nevisidm@default"
+    status: "systemctl status nevisidm@default"
